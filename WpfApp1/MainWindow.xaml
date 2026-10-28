@@ -1,0 +1,564 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Masaüstü Asistanım"
+        Height="760"
+        Width="1180"
+        MinHeight="580"
+        MinWidth="820"
+        WindowStartupLocation="CenterScreen"
+        Background="#10131F"
+        Foreground="#F3F4F6"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+
+        <!-- RENK PALETİ -->
+        <SolidColorBrush x:Key="PanelBrush" Color="#191E2E"/>
+        <SolidColorBrush x:Key="PanelHoverBrush" Color="#2B344B"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#A9B4CC"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#8B5CF6"/>
+        <SolidColorBrush x:Key="AccentBlueBrush" Color="#38BDF8"/>
+        <SolidColorBrush x:Key="BorderBrushColor" Color="#343D56"/>
+
+        <!-- NORMAL BUTON -->
+        <Style x:Key="ActionButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#242B40"/>
+            <Setter Property="Foreground" Value="#E8ECF8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="12,11"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#35405A"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="9"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="#303953"/>
+                                <Setter TargetName="ButtonBorder"
+                                        Property="BorderBrush"
+                                        Value="#8B5CF6"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.78"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- GÖNDER BUTONU -->
+        <Style x:Key="PrimaryButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ActionButtonStyle}">
+            <Setter Property="Background" Value="#7C5CF6"/>
+            <Setter Property="BorderBrush" Value="#8B5CF6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#9578FF"/>
+                    <Setter Property="BorderBrush" Value="#A78BFA"/>
+                </Trigger>
+
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Opacity" Value="0.8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ASİSTAN AÇMA/KAPATMA BUTONU -->
+        <Style x:Key="PowerButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="48"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="MinWidth" Value="48"/>
+            <Setter Property="MinHeight" Value="48"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#DC4666"/>
+            <Setter Property="BorderBrush" Value="#DC4666"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="PowerBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PowerBorder"
+                                        Property="Opacity"
+                                        Value="0.82"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="PowerBorder"
+                                        Property="Opacity"
+                                        Value="0.65"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="PowerBorder"
+                                        Property="Opacity"
+                                        Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- MESAJ GİRİŞ ALANI -->
+        <Style x:Key="MessageInputStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="#20263A"/>
+            <Setter Property="Foreground" Value="#F3F4F6"/>
+            <Setter Property="BorderBrush" Value="#414C69"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CaretBrush" Value="#A78BFA"/>
+            <Setter Property="SelectionBrush" Value="#7254D9"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="14,12"/>
+        </Style>
+
+        <!-- AÇILIR LİSTE -->
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Background" Value="#252B40"/>
+            <Setter Property="Foreground" Value="#202738"/>
+            <Setter Property="BorderBrush" Value="#414C69"/>
+            <Setter Property="Padding" Value="7,5"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="18">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="18"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- SOL MENÜ -->
+        <Border Grid.Column="0"
+                Grid.RowSpan="3"
+                Background="{StaticResource PanelBrush}"
+                CornerRadius="16"
+                Padding="16"
+                BorderBrush="#2C354C"
+                BorderThickness="1">
+
+            <DockPanel LastChildFill="True">
+
+                <StackPanel DockPanel.Dock="Top">
+
+                    <Border Background="#7C5CF6"
+                            Width="44"
+                            Height="44"
+                            CornerRadius="13"
+                            HorizontalAlignment="Left"
+                            Margin="0,2,0,14">
+                        <TextBlock Text="AE"
+                                   FontSize="19"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+
+                    <TextBlock Text="Masaüstü Asistanım"
+                               FontSize="17"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               TextWrapping="Wrap"/>
+
+                    <TextBlock Text="Kişisel yapay zekâ asistanın"
+                               Foreground="{StaticResource MutedBrush}"
+                               FontSize="12"
+                               Margin="0,5,0,28"/>
+
+                    <TextBlock Text="ARAÇLAR"
+                               Foreground="#8995B2"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="2,0,0,12"/>
+
+                    <Button Content="Hafızayı Yönet"
+                            Click="ManageMemories_Click"
+                            Style="{StaticResource ActionButtonStyle}"/>
+
+                    <Button Content="Sohbet Geçmişini Temizle"
+                            Click="ClearChat_Click"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Background="#352638"
+                            BorderBrush="#614052"/>
+                </StackPanel>
+
+                <!-- ÇALIŞMA MODU -->
+                <StackPanel DockPanel.Dock="Bottom"
+                            Margin="0,20,0,2">
+
+                    <Border Height="1"
+                            Background="#343D56"
+                            Margin="0,0,0,14"/>
+
+                    <TextBlock Text="ÇALIŞMA MODU"
+                               Foreground="#8995B2"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="2,0,0,8"/>
+
+                    <ComboBox x:Name="ModeSelector"
+                              Height="38"
+                              SelectedValuePath="Tag"
+                              SelectedValue="balanced"
+                              SelectionChanged="ModeSelector_SelectionChanged"
+                              ToolTip="Modelin bellekte tutulma süresini seç">
+
+                        <ComboBoxItem Content="Dengeli"
+                                      Tag="balanced"
+                                      ToolTip="Model yaklaşık 5 dakika tutulur"/>
+
+                        <ComboBoxItem Content="Performans"
+                                      Tag="performance"
+                                      ToolTip="Model bellekte tutulmaya çalışılır"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Yerel model: qwen3:8b"
+                               Foreground="{StaticResource MutedBrush}"
+                               FontSize="11"
+                               Margin="2,12,0,0"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- ÜST BAŞLIK -->
+        <Border Grid.Column="2"
+                Grid.Row="0"
+                Background="{StaticResource PanelBrush}"
+                CornerRadius="14"
+                Padding="20,16"
+                BorderBrush="#2C354C"
+                BorderThickness="1">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Sohbet"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="White"/>
+
+                    <TextBlock Text="Mesajını yaz ve asistanınla konuş."
+                               FontSize="12"
+                               Foreground="{StaticResource MutedBrush}"
+                               Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+
+                    <Border Background="#252D43"
+                            CornerRadius="9"
+                            Padding="12,10"
+                            Margin="0,0,12,0"
+                            BorderBrush="#35415B"
+                            BorderThickness="1">
+
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="8"
+                                     Height="8"
+                                     Fill="#E5AA53"
+                                     VerticalAlignment="Center"
+                                     Margin="0,0,8,0"/>
+
+                            <TextBlock x:Name="StatusText"
+                                       Text="Başlatılması bekleniyor"
+                                       Foreground="#E0E6F5"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Button x:Name="StartAssistantButton"
+                            Content="⏻"
+                            Click="StartAssistant_Click"
+                            Style="{StaticResource PowerButtonStyle}"
+                            ToolTip="Asistanı aç"
+                            AutomationProperties.Name="Asistanı aç veya kapat"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ANA SOHBET -->
+        <Grid Grid.Column="2"
+              Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="14"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- MESAJLAR -->
+            <Border Grid.Row="0"
+                    Background="{StaticResource PanelBrush}"
+                    CornerRadius="14"
+                    Padding="22"
+                    BorderBrush="#2C354C"
+                    BorderThickness="1">
+
+                <ScrollViewer x:Name="ChatScrollViewer"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+
+                    <ItemsControl x:Name="ChatMessages">
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+
+                                <!--
+                                KULLANICI: SOLDA
+                                ASİSTAN: SAĞDA
+                                -->
+
+                                <Border CornerRadius="14"
+                                        Padding="15"
+                                        Margin="0,0,0,14"
+                                        MaxWidth="760">
+
+                                    <Border.Style>
+                                        <Style TargetType="{x:Type Border}">
+                                            <!-- Varsayılan: asistan sağda -->
+                                            <Setter Property="HorizontalAlignment"
+                                                    Value="Right"/>
+                                            <Setter Property="MaxWidth"
+                                                    Value="760"/>
+                                            <Setter Property="Background"
+                                                    Value="#292442"/>
+                                            <Setter Property="BorderBrush"
+                                                    Value="#55418B"/>
+                                            <Setter Property="BorderThickness"
+                                                    Value="1"/>
+
+                                            <Style.Triggers>
+
+                                                <!-- Kullanıcı mesajı solda -->
+                                                <DataTrigger Binding="{Binding RoleLabel}"
+                                                             Value="Sen">
+                                                    <Setter Property="HorizontalAlignment"
+                                                            Value="Left"/>
+                                                    <Setter Property="Background"
+                                                            Value="#203449"/>
+                                                    <Setter Property="BorderBrush"
+                                                            Value="#315C79"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding RoleLabel}"
+                                                             Value="Kullanıcı">
+                                                    <Setter Property="HorizontalAlignment"
+                                                            Value="Left"/>
+                                                    <Setter Property="Background"
+                                                            Value="#203449"/>
+                                                    <Setter Property="BorderBrush"
+                                                            Value="#315C79"/>
+                                                </DataTrigger>
+
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <StackPanel>
+
+                                        <!-- ROL İSMİ -->
+                                        <TextBlock Text="{Binding RoleLabel}"
+                                                   Foreground="{Binding LabelForeground}"
+                                                   FontWeight="SemiBold"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,0,8"/>
+
+                                        <!-- MESAJ METNİ -->
+                                        <TextBox Text="{Binding Content}"
+                                                 IsReadOnly="True"
+                                                 TextWrapping="Wrap"
+                                                 AcceptsReturn="True"
+                                                 Background="Transparent"
+                                                 Foreground="{Binding TextForeground}"
+                                                 BorderThickness="0"
+                                                 FontSize="14"
+                                                 Padding="0"
+                                                 IsTabStop="False"
+                                                 HorizontalScrollBarVisibility="Disabled"
+                                                 VerticalScrollBarVisibility="Disabled"
+                                                 MinWidth="100"
+                                                 MaxWidth="710"
+                                                 Cursor="IBeam"/>
+
+                                        <!-- KOPYALAMA SİMGESİ -->
+                                        <Button Content="⧉"
+                                                FontSize="18"
+                                                Width="32"
+                                                Height="30"
+                                                Padding="0"
+                                                Margin="0,8,0,0"
+                                                HorizontalAlignment="Right"
+                                                Background="#30364D"
+                                                Foreground="#D5DDF2"
+                                                BorderBrush="#485575"
+                                                BorderThickness="1"
+                                                Cursor="Hand"
+                                                Click="CopyMessage_Click"
+                                                ToolTip="Mesajı panoya kopyala"
+                                                AutomationProperties.Name="Mesajı kopyala">
+
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border x:Name="CopyButtonBorder"
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="6">
+
+                                                        <ContentPresenter
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"/>
+                                                    </Border>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver"
+                                                                 Value="True">
+                                                            <Setter TargetName="CopyButtonBorder"
+                                                                    Property="Background"
+                                                                    Value="#55418B"/>
+                                                            <Setter TargetName="CopyButtonBorder"
+                                                                    Property="BorderBrush"
+                                                                    Value="#A78BFA"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsPressed"
+                                                                 Value="True">
+                                                            <Setter TargetName="CopyButtonBorder"
+                                                                    Property="Opacity"
+                                                                    Value="0.7"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+
+            <!-- MESAJ GİRİŞİ -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource PanelBrush}"
+                    CornerRadius="14"
+                    Padding="14"
+                    BorderBrush="#2C354C"
+                    BorderThickness="1">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Text="MESAJIN"
+                               Foreground="{StaticResource MutedBrush}"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="3,0,0,0"/>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="MessageInput"
+                                 Grid.Column="0"
+                                 Style="{StaticResource MessageInputStyle}"
+                                 MinHeight="52"
+                                 MaxHeight="120"
+                                 VerticalContentAlignment="Center"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto"
+                                 PreviewKeyDown="MessageInput_PreviewKeyDown"
+                                 ToolTip="Enter ile mesaj gönderilir. Shift+Enter yeni satır oluşturur."/>
+
+                        <Button x:Name="SendButton"
+                                Grid.Column="2"
+                                Content="Gönder  ➤"
+                                Click="SendButton_Click"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                MinHeight="52"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
